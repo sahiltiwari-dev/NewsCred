@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evidence Compass | Team Stackers</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">TEAM STACKERS · G2T5 · CNT-08</p>
+      <h1>Evidence Compass</h1>
+      <p class="subtitle">A quick evidence view for judging the support behind a news claim.</p>
+    </div>
+    <div class="badge">Prototype</div>
+  </header>
+
+  <main class="container">
+    <section class="hero-card">
+      <div>
+        <h2>Check a news claim</h2>
+        <p>Enter a claim. The prototype compares it with a prepared evidence record and explains the signals used.</p>
+      </div>
+      <form id="claimForm">
+        <label for="claim">News claim</label>
+        <textarea id="claim" rows="4" placeholder="Example: A heatwave warning was issued for the city this week" required></textarea>
+        <label for="url">Article URL <span>(optional)</span></label>
+        <input id="url" type="url" placeholder="https://example.com/article">
+        <button type="submit" id="checkBtn">Check evidence</button>
+      </form>
+      <div class="demo-links">
+        <span>Demo claims:</span>
+        <button class="sample" data-claim="A heatwave warning was issued for the city this week">Heatwave</button>
+        <button class="sample" data-claim="A viral post claims a new law starts tomorrow">New law</button>
+        <button class="sample" data-claim="A university has announced a scholarship deadline extension">Scholarship</button>
+      </div>
+    </section>
+
+    <section id="loading" class="status hidden">Checking the evidence record…</section>
+    <section id="error" class="error hidden"></section>
+
+    <section id="result" class="result hidden">
+      <div class="result-head">
+        <div>
+          <p class="eyebrow">EVIDENCE RESULT</p>
+          <h2 id="resultTitle">—</h2>
+          <p id="matchedClaim" class="muted">—</p>
+        </div>
+        <div id="levelPill" class="level-pill">—</div>
+      </div>
+
+      <div class="score-grid">
+        <div class="score-card">
+          <span class="label">Evidence score</span>
+          <strong id="score">0</strong>
+          <small>prototype rule-based score</small>
+        </div>
+        <div class="score-card">
+          <span class="label">Original source</span>
+          <strong id="original">—</strong>
+          <small id="originalDetail">—</small>
+        </div>
+        <div class="score-card">
+          <span class="label">Context</span>
+          <strong id="context">—</strong>
+          <small id="contextDetail">—</small>
+        </div>
+      </div>
+
+      <div class="analysis-grid">
+        <div class="panel">
+          <h3>Why this result?</h3>
+          <ul id="reasons" class="reason-list"></ul>
+        </div>
+        <div class="panel">
+          <h3>Score signals</h3>
+          <div id="signalBars"></div>
+        </div>
+      </div>
+
+      <div class="sources-grid">
+        <div class="panel">
+          <h3>Supporting evidence</h3>
+          <div id="supportingSources"></div>
+        </div>
+        <div class="panel">
+          <h3>Conflicting evidence</h3>
+          <div id="conflictingSources"></div>
+        </div>
+      </div>
+
+      <div class="explanation panel">
+        <h3>Explanation</h3>
+        <p id="explanation">—</p>
+        <p class="disclaimer">Prototype note: this result represents evidence support in the demo dataset. It is not a guaranteed truth/falsehood verdict.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Evidence Compass · Team Stackers · Computational prototype for DSC2155</p>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
