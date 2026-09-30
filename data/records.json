@@ -1,0 +1,94 @@
+[
+  {
+    "id": "EC-001",
+    "title": "Heatwave warning \u2014 demo record",
+    "claim": "A heatwave warning was issued for the city this week",
+    "keywords": ["heatwave", "warning", "city", "week"],
+    "original_source_available": true,
+    "original_source_clue": "Government weather bulletin is identified as the original source.",
+    "independent_supporting_sources": 2,
+    "conflicting_sources_count": 0,
+    "context_match": true,
+    "context_note": "Publication date and warning period align in the demo record.",
+    "supporting_sources": [
+      {
+        "name": "National Weather Service Bulletin (demo)",
+        "type": "Primary source",
+        "date": "2026-09-25",
+        "note": "Original bulletin referenced by the record."
+      },
+      {
+        "name": "Regional Weather Desk (demo)",
+        "type": "Independent report",
+        "date": "2026-09-25",
+        "note": "Reports the same warning."
+      }
+    ],
+    "conflicting_sources": [],
+    "explanation": "The record has an original-source clue, independent support, and matching context, so the prototype assigns Higher support."
+  },
+  {
+    "id": "EC-002",
+    "title": "Viral new-law post \u2014 demo record",
+    "claim": "A viral post claims a new law starts tomorrow",
+    "keywords": ["viral", "post", "new", "law", "tomorrow"],
+    "original_source_available": false,
+    "original_source_clue": "The viral post does not identify an original government notification.",
+    "independent_supporting_sources": 1,
+    "conflicting_sources_count": 1,
+    "context_match": true,
+    "context_note": "The post is recent, but the underlying legal source is not identified.",
+    "supporting_sources": [
+      {
+        "name": "News explainer (demo)",
+        "type": "Secondary source",
+        "date": "2026-09-26",
+        "note": "Discusses the viral claim but does not establish the original notice."
+      }
+    ],
+    "conflicting_sources": [
+      {
+        "name": "Legal affairs desk (demo)",
+        "type": "Conflicting report",
+        "date": "2026-09-26",
+        "note": "Says the claimed start date is not supported by the available notice."
+      }
+    ],
+    "explanation": "The record contains a supporting report but no original-source clue and one conflicting report. The prototype therefore maps it to Low support."
+  },
+  {
+    "id": "EC-003",
+    "title": "Scholarship deadline extension \u2014 demo record",
+    "claim": "A university has announced a scholarship deadline extension",
+    "keywords": ["university", "scholarship", "deadline", "extension"],
+    "original_source_available": true,
+    "original_source_clue": "University notice is identified as the original announcement.",
+    "independent_supporting_sources": 1,
+    "conflicting_sources_count": 1,
+    "context_match": true,
+    "context_note": "The notice is recent and refers to the current application cycle.",
+    "supporting_sources": [
+      {
+        "name": "University student notice (demo)",
+        "type": "Primary source",
+        "date": "2026-09-26",
+        "note": "Original announcement."
+      },
+      {
+        "name": "Student affairs report (demo)",
+        "type": "Independent report",
+        "date": "2026-09-26",
+        "note": "Matches the extension details."
+      }
+    ],
+    "conflicting_sources": [
+      {
+        "name": "Older circular repost (demo)",
+        "type": "Conflicting/older source",
+        "date": "2026-08-10",
+        "note": "Shows the previous deadline."
+      }
+    ],
+    "explanation": "A primary source and independent report support the claim, but an older conflicting circular is also present. The prototype therefore maps the record to Mixed rather than treating the claim as certain."
+  }
+]
