@@ -1,19 +1,11 @@
-# Python
 __pycache__/
 *.py[cod]
 .venv/
 venv/
-env/
-*.db
-*.sqlite
-*.sqlite3
-
-# Secrets
 .env
-.streamlit/secrets.toml
-
-# OS / IDE
+.env.*
+!.env.example
+*.db
+instance/
+.pytest_cache/
 .DS_Store
-Thumbs.db
-.vscode/
-.idea/
