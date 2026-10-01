@@ -7,7 +7,7 @@ cd NewsCred
 py -3.13 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
-python app.py
+streamlit run app.py
 ```
 
 Open http://127.0.0.1:5000.
@@ -66,7 +66,7 @@ SECRET_KEY=<generate a strong secret>
 DATABASE_URL=<your PostgreSQL connection string>
 ```
 
-Render's Flask deployment documentation recommends Gunicorn for production and supports automatic deployments from a connected Git repository.
+Render's Streamlit deployment documentation recommends Gunicorn for production and supports automatic deployments from a connected Git repository.
 
 ## 4. Optional fact-check integration
 
