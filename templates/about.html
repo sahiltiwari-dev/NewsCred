@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}About EvidenceCompass{% endblock %}
+
+{% block content %}
+<article class="wrap narrow page prose">
+  <h1 class="page-title">About EvidenceCompass</h1>
+  <p class="lede">EvidenceCompass helps you slow down before you share. It checks a claim against recent public coverage and shows you the evidence behind the score.</p>
+
+  <h2>What the score means</h2>
+  <p>Every check starts at 50 and moves up or down based on what we find. The score describes how well the claim is supported by the sources we could reach. It is not the probability that the claim is true.</p>
+  <ul>
+    <li><strong>Related coverage</strong> adds points for each recent article that matches the claim.</li>
+    <li><strong>Publisher diversity</strong> adds points when different outlets report it, not one outlet repeated.</li>
+    <li><strong>Headline comparison</strong> adds points when headlines share a lot of wording with your claim.</li>
+    <li><strong>Authoritative evidence</strong> adds the most. Government, health and science bodies count here.</li>
+    <li><strong>Conflicting evidence</strong> subtracts points when results contain fact-check or dispute language.</li>
+  </ul>
+  <p>Without an authoritative source, the score is capped at 85.</p>
+
+  <h2>Where the evidence comes from</h2>
+  <p>EvidenceCompass searches the last seven days of news through GDELT and Google News. When a Google Fact Check API key is configured, it also looks up published fact-check reviews.</p>
+
+  <h2>What it can't do</h2>
+  <ul>
+    <li>It compares wording, not meaning, so a paraphrased claim can score lower than it should.</li>
+    <li>Very new or very local stories may not have coverage yet.</li>
+    <li>Coverage is not proof. Many outlets can repeat the same false claim.</li>
+  </ul>
+  <p>When the stakes are high, open the sources and read them.</p>
+
+  <p><a class="btn btn-primary" href="{{ url_for('home') }}">Check a claim</a></p>
+</article>
+{% endblock %}

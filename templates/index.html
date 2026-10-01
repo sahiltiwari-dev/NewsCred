@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block nav_extra %}
+<button class="nav-btn" id="history-open" type="button">History</button>
+{% endblock %}
+
+{% block content %}
+<section class="wrap hero">
+  <div class="hero-copy">
+    <h1>Check it before you share it.</h1>
+    <p class="lede">Paste a headline, a forwarded message or an article link. EvidenceCompass looks for recent coverage, fact-checks and original sources, then shows how well the claim holds up.</p>
+
+    <form id="check-form" novalidate>
+      <label class="field-label" for="claim">Claim, headline or article link</label>
+      <div class="field">
+        <textarea id="claim" name="claim" rows="5" maxlength="5000" placeholder="Paste what you read or received, for example: The government has announced free laptops for every college student." required></textarea>
+        <div class="field-foot">
+          <span class="hint">Ctrl + Enter to check</span>
+          <span class="count" id="count" aria-hidden="true">0 / 5000</span>
+        </div>
+      </div>
+
+      <details class="source-box">
+        <summary>Add the original source link</summary>
+        <label class="visually-hidden" for="source_url">Original source link</label>
+        <input id="source_url" name="source_url" type="url" inputmode="url" autocomplete="off" placeholder="https://example.gov.in/press-release">
+        <p class="hint">If the claim comes from a specific page, link it. Pages from government, health and science bodies count as strong evidence.</p>
+      </details>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="submit" type="submit">Check claim</button>
+        <button class="btn btn-quiet" id="clear" type="button">Clear</button>
+      </div>
+
+      <p class="error" id="form-error" role="alert" hidden></p>
+
+      <div class="examples">
+        <span class="hint">Try one:</span>
+        <button type="button" class="chip" data-fill="The government has announced free laptops for every college student in India.">Free laptops</button>
+        <button type="button" class="chip" data-fill="NASA has confirmed that a huge asteroid will pass very close to Earth this month.">Asteroid</button>
+        <button type="button" class="chip" data-fill="Drinking hot lemon water every morning completely cures diabetes, doctors say.">Diabetes cure</button>
+      </div>
+    </form>
+  </div>
+
+  <aside class="meter" id="meter" data-state="idle" aria-live="polite" aria-label="Credibility result">
+    <svg class="dial" viewBox="0 0 240 150" role="img" aria-label="Credibility meter from 0 to 100">
+      <g class="dial-zones" fill="none" stroke-width="14">
+        <path class="zone-low"  d="M 20 130 A 100 100 0 0 1 220 130" pathLength="100" stroke-dasharray="40 60"/>
+        <path class="zone-mid"  d="M 20 130 A 100 100 0 0 1 220 130" pathLength="100" stroke-dasharray="0 40 30 30"/>
+        <path class="zone-high" d="M 20 130 A 100 100 0 0 1 220 130" pathLength="100" stroke-dasharray="0 70 30"/>
+      </g>
+      <path class="dial-value" id="dial-value" d="M 20 130 A 100 100 0 0 1 220 130" pathLength="100"/>
+      <text class="dial-end" x="20" y="148" text-anchor="middle">0</text>
+      <text class="dial-end" x="220" y="148" text-anchor="middle">100</text>
+      <g class="needle" id="needle">
+        <line x1="120" y1="130" x2="120" y2="48"/>
+        <circle cx="120" cy="130" r="8"/>
+      </g>
+    </svg>
+
+    <p class="score"><span id="score-num">--</span><span class="score-unit">/100</span></p>
+    <p class="verdict" id="verdict">Waiting for a claim</p>
+    <p class="verdict-note" id="verdict-note">Paste a claim on the left to see how well it is supported by recent coverage and sources.</p>
+    <p class="stage" id="stage" hidden></p>
+
+    <dl class="stats">
+      <div><dt>Supporting</dt><dd id="stat-support">--</dd></div>
+      <div><dt>Disputing</dt><dd id="stat-conflict">--</dd></div>
+      <div><dt>Original source</dt><dd id="stat-original">--</dd></div>
+    </dl>
+    <p class="meter-fine">A verification score, not the chance that a claim is true.</p>
+  </aside>
+</section>
+
+<section class="wrap report" id="report" aria-labelledby="report-title" hidden>
+  <h2 id="report-title">Your report</h2>
+
+  <blockquote class="claim-echo">
+    <p id="claim-echo"></p>
+    <a id="claim-link" href="#" target="_blank" rel="noopener noreferrer nofollow" hidden></a>
+  </blockquote>
+
+  <div class="report-grid">
+    <section aria-labelledby="why-title">
+      <h3 id="why-title">Why this score</h3>
+      <ul class="reasons" id="reasons"></ul>
+      <p class="original" id="original-line"></p>
+    </section>
+
+    <section aria-labelledby="build-title">
+      <h3 id="build-title">How the score was built</h3>
+      <div class="breakdown" id="breakdown"></div>
+      <p class="hint" id="cap-note" hidden>Capped at 85 because no authoritative source was confirmed.</p>
+    </section>
+  </div>
+
+  <section class="evidence" aria-labelledby="evidence-title">
+    <div class="evidence-head">
+      <h3 id="evidence-title">Evidence found</h3>
+      <div class="filters" id="filters" role="group" aria-label="Filter evidence"></div>
+    </div>
+    <ol class="sources" id="sources"></ol>
+    <p class="empty" id="sources-empty" hidden>No recent coverage matched this claim. Look for the original announcement on an official website before sharing it.</p>
+  </section>
+
+  <div class="share-bar">
+    <div>
+      <h3>Send this result to someone</h3>
+      <p class="hint">Share links show a snapshot of this report and expire after 30 days.</p>
+    </div>
+    <div class="share-actions">
+      <button class="btn btn-primary" id="share-btn" type="button">Create share link</button>
+      <button class="btn btn-quiet" id="copy-summary" type="button">Copy summary</button>
+    </div>
+    <div class="share-out" id="share-out" hidden>
+      <label class="visually-hidden" for="share-url">Share link</label>
+      <input id="share-url" type="text" readonly>
+      <button class="btn btn-quiet" id="copy-link" type="button">Copy link</button>
+    </div>
+    <p class="hint status-line" id="share-status" role="status"></p>
+  </div>
+</section>
+
+<section class="wrap how" id="how" aria-labelledby="how-title">
+  <h2 id="how-title">How a check works</h2>
+  <ol class="steps">
+    <li>
+      <span class="step-num" aria-hidden="true">1</span>
+      <h3>You paste the claim</h3>
+      <p>Add a headline, message or link. If you know where it came from, add the original source too.</p>
+    </li>
+    <li>
+      <span class="step-num" aria-hidden="true">2</span>
+      <h3>We search public sources</h3>
+      <p>EvidenceCompass looks at the last seven days of news coverage and published fact-checks, then compares each headline with your wording.</p>
+    </li>
+    <li>
+      <span class="step-num" aria-hidden="true">3</span>
+      <h3>You see the evidence</h3>
+      <p>You get a score, the reasons behind it and every source we used, so you can judge for yourself.</p>
+    </li>
+  </ol>
+</section>
+
+<dialog id="history-dialog" aria-labelledby="history-title">
+  <div class="dialog-head">
+    <h2 id="history-title">Your recent checks</h2>
+    <button class="icon-btn" id="history-close" type="button" aria-label="Close history">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <ul class="history-list" id="history-list"></ul>
+  <p class="empty" id="history-empty" hidden>Nothing here yet. Checks you run on this device will show up in this list.</p>
+  <div class="dialog-foot">
+    <button class="btn btn-quiet" id="history-clear" type="button">Clear history</button>
+  </div>
+</dialog>
+{% endblock %}

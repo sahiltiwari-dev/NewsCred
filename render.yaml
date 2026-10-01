@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: newscred
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --workers 2 --threads 4 --timeout 60
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: newscred-db
+          property: connectionString
+      - key: RATE_LIMIT_PER_MINUTE
+        value: 12
+      - key: SESSION_COOKIE_SECURE
+        value: 1
+      - key: FLASK_ENV
+        value: production
+      - key: FLASK_DEBUG
+        value: 0
+
+databases:
+  - name: newscred-db
+    databaseName: newscred
+    user: newscred

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Shared EvidenceCompass result{% endblock %}
+
+{% block content %}
+{% if not data %}
+<section class="wrap narrow page">
+  <h1 class="page-title">This link isn't available</h1>
+  <p class="lede">The shared result doesn't exist or has expired. Share links last 30 days.</p>
+  <p><a class="btn btn-primary" href="{{ url_for('home') }}">Check a claim</a></p>
+</section>
+{% else %}
+{% set st = data.status if data.status in ['reliable', 'verification', 'questionable'] else 'verification' %}
+{% set score = [[data.score|int, 0]|max, 100]|min %}
+{% set reasons = data.reasons if data.reasons is sequence and data.reasons is not string else [] %}
+{% set breakdown = data.score_breakdown if data.score_breakdown is sequence and data.score_breakdown is not string else [] %}
+{% set sources = data.sources if data.sources is sequence and data.sources is not string else [] %}
+
+<section class="wrap share-hero">
+  <div class="share-copy">
+    <h1 class="page-title">Someone shared a EvidenceCompass check</h1>
+    <blockquote class="claim-echo"><p>{{ data.claim }}</p></blockquote>
+    <ul class="reasons">
+      {% for r in reasons[:8] %}<li>{{ r }}</li>{% endfor %}
+    </ul>
+    <p class="hint">This is a snapshot{% if expires_at %} that expires on {{ expires_at[:10] }}{% endif %}. Sources may have changed since.</p>
+    <p><a class="btn btn-primary" href="{{ url_for('home') }}">Check your own claim</a></p>
+  </div>
+
+  <aside class="meter" data-state="{{ st }}" aria-label="Credibility result">
+    <svg class="dial" viewBox="0 0 240 150" role="img" aria-label="Credibility meter, score {{ score }} out of 100">
+      <g class="dial-zones" fill="none" stroke-width="14">
+        <path class="zone-low"  d="M 20 130 A 100 100 0 0 1 220 130" pathLength="100" stroke-dasharray="40 60"/>
+        <path class="zone-mid"  d="M 20 130 A 100 100 0 0 1 220 130" pathLength="100" stroke-dasharray="0 40 30 30"/>
+        <path class="zone-high" d="M 20 130 A 100 100 0 0 1 220 130" pathLength="100" stroke-dasharray="0 70 30"/>
+      </g>
+      <path class="dial-value" d="M 20 130 A 100 100 0 0 1 220 130" pathLength="100" style="stroke-dashoffset: {{ 100 - score }}"/>
+      <text class="dial-end" x="20" y="148" text-anchor="middle">0</text>
+      <text class="dial-end" x="220" y="148" text-anchor="middle">100</text>
+      <g class="needle" style="transform: rotate({{ -90 + score * 1.8 }}deg)">
+        <line x1="120" y1="130" x2="120" y2="48"/>
+        <circle cx="120" cy="130" r="8"/>
+      </g>
+    </svg>
+    <p class="score"><span>{{ score }}</span><span class="score-unit">/100</span></p>
+    <p class="verdict">{{ (data.result or '')|string|lower|capitalize }}</p>
+    <dl class="stats">
+      <div><dt>Supporting</dt><dd>{{ data.supporting_sources|int }}</dd></div>
+      <div><dt>Disputing</dt><dd>{{ data.conflicting_sources|int }}</dd></div>
+      <div><dt>Original source</dt><dd>{{ 'Found' if data.original_source else 'Not found' }}</dd></div>
+    </dl>
+    <p class="meter-fine">A verification score, not the chance that a claim is true.</p>
+  </aside>
+</section>
+
+<section class="wrap report">
+  <div class="report-grid">
+    <section>
+      <h3>How the score was built</h3>
+      <div class="breakdown">
+        <div class="bd-row bd-base"><span class="bd-label">Starting point</span><span class="bd-track"></span><span class="bd-val">50</span></div>
+        {% for b in breakdown %}
+        {% set v = b.value|int %}
+        <div class="bd-row {{ 'is-neg' if v < 0 else '' }}">
+          <span class="bd-label">{{ b.label }}</span>
+          <span class="bd-track"><span class="bd-fill" style="width: {{ ([v|abs, 30]|min) / 30 * 100 }}%"></span></span>
+          <span class="bd-val">{{ '+' if v > 0 else '' }}{{ v }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+
+  <section class="evidence">
+    <div class="evidence-head"><h3>Evidence found</h3></div>
+    {% if sources %}
+    <ol class="sources">
+      {% for s in sources[:12] %}
+      {% set sstat = s.status if s.status in ['related', 'conflict', 'insufficient'] else 'insufficient' %}
+      <li class="source is-{{ sstat }}">
+        <div class="source-top">
+          <strong class="source-name">{{ s.name }}</strong>
+          <span class="tag">{{ s.type }}</span>
+        </div>
+        <p class="source-title">
+          {% if s.url is string and (s.url.startswith('http://') or s.url.startswith('https://')) %}
+          <a href="{{ s.url }}" target="_blank" rel="noopener noreferrer nofollow">{{ s.description }}</a>
+          {% else %}{{ s.description }}{% endif %}
+        </p>
+        <p class="source-meta">
+          <span>{{ {'related': 'Matches the claim', 'conflict': 'Disputes or fact-checks', 'insufficient': 'Weak match'}[sstat] }}</span>
+          {% if s.quality_label %}<span>{{ s.quality_label }}</span>{% endif %}
+          {% if s.rating %}<span>Rated: {{ s.rating }}</span>{% endif %}
+        </p>
+      </li>
+      {% endfor %}
+    </ol>
+    {% else %}
+    <p class="empty">No recent coverage matched this claim.</p>
+    {% endif %}
+  </section>
+</section>
+{% endif %}
+{% endblock %}

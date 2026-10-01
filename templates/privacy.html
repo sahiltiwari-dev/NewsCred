@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Privacy: EvidenceCompass{% endblock %}
+
+{% block content %}
+<article class="wrap narrow page prose">
+  <h1 class="page-title">Privacy</h1>
+  <p class="lede">EvidenceCompass doesn't ask you to sign up. Here is what is stored and what leaves the app when you run a check.</p>
+
+  <h2>What we store</h2>
+  <ul>
+    <li>A random visitor ID in a cookie, so your recent checks can be shown back to you.</li>
+    <li>The claim text, score and result of each check, linked to that visitor ID.</li>
+    <li>Share snapshots you create. They are public to anyone with the link and are deleted after 30 days.</li>
+  </ul>
+
+  <h2>What we send to other services</h2>
+  <ul>
+    <li>Keywords from your claim are sent to news search services to find coverage.</li>
+    <li>If you add a source link, EvidenceCompass fetches that page to read its title.</li>
+  </ul>
+
+  <h2>Your controls</h2>
+  <p>Open <strong>History</strong> on the home page and choose <strong>Clear history</strong> to delete your saved checks.</p>
+
+  <p><a class="btn btn-primary" href="{{ url_for('home') }}">Back to EvidenceCompass</a></p>
+</article>
+{% endblock %}

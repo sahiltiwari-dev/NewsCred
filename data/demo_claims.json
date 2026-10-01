@@ -1,0 +1,191 @@
+[
+    {
+        "id": 1,
+        "keywords": ["education scheme", "college students", "government announces"],
+
+        "claim": "The Government of India has announced a new education scheme for college students.",
+
+        "score": 82,
+        "result": "LIKELY RELIABLE",
+        "status": "reliable",
+
+        "supporting_sources": 2,
+        "conflicting_sources": 0,
+        "original_source": true,
+
+        "reasons": [
+            "An official government source is available.",
+            "The claim can be checked against authoritative government information.",
+            "No major conflicting source was identified in this prototype dataset."
+        ],
+
+        "score_breakdown": [
+            {
+                "label": "Supporting evidence",
+                "value": 25
+            },
+            {
+                "label": "Independent source agreement",
+                "value": 25
+            },
+            {
+                "label": "Original source identified",
+                "value": 20
+            },
+            {
+                "label": "Source quality and context",
+                "value": 12
+            }
+        ],
+
+        "sources": [
+            {
+                "name": "Press Information Bureau",
+                "type": "Official Government Source",
+                "status": "supports",
+                "description": "Official Government of India information published through the Press Information Bureau.",
+                "url": "https://www.pib.gov.in/"
+            },
+            {
+                "name": "PIB Fact Check Unit",
+                "type": "Official Fact-Checking Resource",
+                "status": "supports",
+                "description": "Official resource for checking suspicious information related to the Government of India.",
+                "url": "https://factcheck.pib.gov.in/"
+            }
+        ],
+
+        "original_source_name": "Press Information Bureau",
+        "original_source_url": "https://www.pib.gov.in/"
+    },
+
+
+    {
+        "id": 2,
+        "keywords": ["free laptop", "free laptops", "laptop to every college student"],
+
+        "claim": "The government is giving free laptops to every college student.",
+
+        "score": 43,
+        "result": "QUESTIONABLE",
+        "status": "questionable",
+
+        "supporting_sources": 1,
+        "conflicting_sources": 1,
+        "original_source": false,
+
+        "reasons": [
+            "The claim makes a broad promise that requires verification.",
+            "The original source of the claim is not clearly identified.",
+            "The claim should be checked against official government announcements."
+        ],
+
+        "score_breakdown": [
+            {
+                "label": "Some supporting evidence",
+                "value": 25
+            },
+            {
+                "label": "Independent source agreement",
+                "value": 15
+            },
+            {
+                "label": "Original source identified",
+                "value": 0
+            },
+            {
+                "label": "Source quality and context",
+                "value": 13
+            },
+            {
+                "label": "Conflicting information",
+                "value": -10
+            }
+        ],
+
+        "sources": [
+            {
+                "name": "PIB Fact Check Unit",
+                "type": "Official Fact-Checking Resource",
+                "status": "supports",
+                "description": "Official resource for checking suspicious information related to the Government of India.",
+                "url": "https://factcheck.pib.gov.in/"
+            },
+            {
+                "name": "Press Information Bureau",
+                "type": "Official Government Source",
+                "status": "conflict",
+                "description": "Official government information should be checked before accepting broad claims about government schemes.",
+                "url": "https://www.pib.gov.in/"
+            }
+        ],
+
+        "original_source_name": "Not confidently identified",
+        "original_source_url": "https://factcheck.pib.gov.in/"
+    },
+
+
+    {
+        "id": 3,
+        "keywords": ["viral whatsapp", "whatsapp message", "viral message"],
+
+        "claim": "A viral WhatsApp message says that a new government rule will affect every student immediately.",
+
+        "score": 35,
+        "result": "LIKELY MISLEADING",
+        "status": "misleading",
+
+        "supporting_sources": 0,
+        "conflicting_sources": 2,
+        "original_source": false,
+
+        "reasons": [
+            "The claim originates from an unverified viral message.",
+            "No authoritative original source was identified.",
+            "Government-related claims should be checked against official sources."
+        ],
+
+        "score_breakdown": [
+            {
+                "label": "Supporting evidence",
+                "value": 0
+            },
+            {
+                "label": "Independent source agreement",
+                "value": 10
+            },
+            {
+                "label": "Original source identified",
+                "value": 0
+            },
+            {
+                "label": "Source quality and context",
+                "value": 45
+            },
+            {
+                "label": "Conflicting information",
+                "value": -20
+            }
+        ],
+
+        "sources": [
+            {
+                "name": "PIB Fact Check Unit",
+                "type": "Official Fact-Checking Resource",
+                "status": "conflict",
+                "description": "Official resource for checking suspicious government-related information.",
+                "url": "https://factcheck.pib.gov.in/"
+            },
+            {
+                "name": "PIB Fact Check FAQ",
+                "type": "Official Reference",
+                "status": "conflict",
+                "description": "Explains the official process used for verifying government-related claims.",
+                "url": "https://www.pib.gov.in/FAQ_fact.aspx?lang=1&reg=3"
+            }
+        ],
+
+        "original_source_name": "Not identified",
+        "original_source_url": "https://factcheck.pib.gov.in/"
+    }
+]
